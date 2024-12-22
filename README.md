@@ -6,7 +6,8 @@ This project demonstrates a smart customizable phone prefix dropdown with advanc
 
 ## Demo
 
-Check out the live demo here: [Smart Phone Number Prefix Search](https://smart-phone-prefix.francescoliverio.com/){:target="_blank"}
+Check out the live demo here: <a href="https://smart-phone-prefix.francescoliverio.com/" target="_blank">Smart Phone Number Prefix Search</a>
+
 
 ---
 
