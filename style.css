@@ -151,14 +151,6 @@ body {
   gap: 10px; /* Space between prefix and number fields */
 }
 
-/* Media Query for Mobile (Max Width: 768px) */
-@media (max-width: 768px) {
-  .phone-number-input {
-    flex-direction: column; /* Stack elements vertically */
-    gap: 10px; /* Reduce gap for mobile */
-  }
-}
-
 .phone-prefix-dropdown {
   position: relative;
 }
@@ -230,4 +222,15 @@ body {
 /* Timezone value styling */
 #result .json-timezone {
   color: #a6e22e; /* Orange for timezones */
+}
+
+/* Media Query for Mobile (Max Width: 768px) */
+@media (max-width: 768px) {
+  .phone-number-input {
+    flex-direction: column; /* Stack elements vertically */
+    gap: 10px; /* Reduce gap for mobile */
+  }
+  #result {
+    width: 350px;
+  }
 }
