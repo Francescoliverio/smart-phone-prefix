@@ -132,7 +132,7 @@
       li.dataset.countryCode = isoCode;
 
       li.innerHTML = `
-        <img class="flag" src="${flagUrl}" alt="${countryName} flag" height="18" />
+        <img class="flag" src="${flagUrl}" alt="${countryName} flag" width="24" height="18" />
         <span class="option-label">${prefix} ${countryName}</span>
       `;
 

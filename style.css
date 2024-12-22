@@ -32,7 +32,7 @@ body {
   align-items: center;
   gap: 8px; /* spacing between spinner/flag/prefix/arrow */
   cursor: pointer;
-  padding: 8px;
+  padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fff;
 }
@@ -45,6 +45,9 @@ body {
 
 .flag {
   border: 1px solid #00000021;
+  width: 24px;
+  height: 18px;
+  object-fit: cover;
 }
 
 /* Spinner inside the button */
