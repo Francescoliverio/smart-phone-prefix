@@ -4,6 +4,12 @@ This project demonstrates a smart customizable phone prefix dropdown with advanc
 
 ---
 
+## Demo
+
+Check out the live demo here: [Phone Number Prefix Search](https://smart-phone-prefix.francescoliverio.com/)
+
+---
+
 ## Features
 
 - **Dynamic Data Fetching**:
@@ -119,3 +125,4 @@ This project is open source and available under the [MIT License](LICENSE).
 - [REST Countries API](https://restcountries.com/v3.1/all) for country data.
 - [GeoJS API](https://get.geojs.io/) for IP geolocation.
 
+Feel free to reach out if you have any questions or suggestions!
