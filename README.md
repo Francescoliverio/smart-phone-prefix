@@ -1,4 +1,4 @@
-# Phone Number Prefix Search in HTML, JS, CSS
+# Smart Phone Number Prefix Search in HTML, JS, CSS
 
 This project demonstrates a smart customizable phone prefix dropdown with advanced features like dynamic country fetching, user geolocation, search functionality, and ARIA-compliant keyboard navigation. The dropdown includes a spinner while loading and a search bar to filter by country name, code, or prefix.
 
@@ -6,7 +6,7 @@ This project demonstrates a smart customizable phone prefix dropdown with advanc
 
 ## Demo
 
-Check out the live demo here: [Phone Number Prefix Search](https://smart-phone-prefix.francescoliverio.com/)
+Check out the live demo here: [Smart Phone Number Prefix Search](https://smart-phone-prefix.francescoliverio.com/)
 
 ---
 
@@ -47,12 +47,12 @@ root/
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/your-username/dropdown-project.git
+   git clone https://github.com/Francescoliverio/smart-phone-prefix.git
    ```
 
 2. Navigate to the project directory:
    ```bash
-   cd dropdown-project
+   cd smart-phone-prefix
    ```
 
 3. Open `index.html` in a browser to view the dropdown:
