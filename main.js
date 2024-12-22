@@ -25,23 +25,42 @@
   // 2. FETCH FUNCTIONS
   // -----------------------------
   async function fetchCountries() {
-    const response = await fetch('https://restcountries.com/v3.1/all');
-    if (!response.ok) {
-      throw new Error('Error fetching countries');
+    try {
+      const response = await fetch('https://restcountries.com/v3.1/all');
+      if (!response.ok) {
+        throw new Error(`Remote fetch failed: ${response.status}`);
+      }
+      return response.json();
+    } catch (err) {
+      console.warn('Using local fallback:', err);
+      // Use local fallback
+      const localData = await fetch('./data/countries.json');
+      return localData.json();
     }
-    return response.json();
   }
 
   async function fetchUserLocation() {
-    // e.g. "country_code": "CH"
-    try {
-      const response = await fetch('https://get.geojs.io/v1/ip/geo.json');
-      if (response.ok) {
-        return response.json();
+    const services = [
+      'https://get.geojs.io/v1/ip/geo.json',
+      'https://ipapi.co/json/',
+      'https://ipwhois.app/json/',
+    ];
+  
+    for (let i = 0; i < services.length; i++) {
+      try {
+        const response = await fetch(services[i]);
+        if (response.ok) {
+          return response.json();
+        } else {
+          console.warn(`Service ${services[i]} failed: ${response.status}`);
+        }
+      } catch (err) {
+        console.error(`Error with service ${services[i]}:`, err);
       }
-    } catch (err) {
-      console.error('GeoJS error:', err);
     }
+  
+    // If all services fail
+    console.error('All GeoIP services failed.');
     return null;
   }
 
