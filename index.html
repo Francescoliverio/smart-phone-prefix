@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spinner in Button + Search in Dropdown</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>Phone Number Prefix Search in HTML, JS, CSS</h1>
+
+  <!-- Phone Prefix Dropdown -->
+  <div class="phone-prefix-dropdown">
+    
+    <!-- The Toggle Button -->
+    <button
+      class="phone-dropdown-toggle"
+      type="button"
+      aria-haspopup="listbox"
+      aria-expanded="false"
+      aria-labelledby="phonePrefixLabel"
+    >
+      <!-- Spinner (shown on load; replaced by flag/prefix when ready) -->
+      <div class="spinner"></div>
+
+      <!-- Selected Flag (hidden initially) -->
+      <img
+        class="selected-flag flag"
+        src=""
+        alt="Selected country flag"
+        height="18"
+        style="display: none;"
+      />
+
+      <!-- Current Prefix (hidden initially) -->
+      <span
+        class="selected-prefix"
+        style="display: none;"
+      >
+        +1
+      </span>
+
+      <!-- Dropdown Arrow -->
+      <span class="dropdown-arrow">▼</span>
+    </button>
+
+    <!-- SR-only label for accessibility -->
+    <span id="phonePrefixLabel" class="sr-only">Select your phone prefix</span>
+
+    <!-- The Dropdown Content -->
+    <div class="phone-dropdown-content" style="display: none;">
+      
+      <!-- Search Input (always inside dropdown, visible when dropdown opens) -->
+      <input
+        type="text"
+        class="phone-dropdown-search"
+        placeholder="Search country or prefix"
+        aria-label="Search country name or prefix"
+      />
+
+      <!-- List of countries -->
+      <ul
+        class="phone-dropdown-list"
+        role="listbox"
+        tabindex="-1"
+        aria-activedescendant=""
+      ></ul>
+    </div>
+
+    <!-- Hidden field to store ISO code -->
+    <input
+      type="hidden"
+      class="iso-code-input"
+      name="isoCode"
+      value=""
+    />
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

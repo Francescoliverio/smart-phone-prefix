@@ -1,0 +1,125 @@
+/* Basic reset and utility classes */
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 20px;
+  font-family: sans-serif;
+}
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Container for phone prefix dropdown */
+.phone-prefix-dropdown {
+  position: relative;
+  width: 280px;
+  margin-bottom: 1rem;
+}
+
+/* The toggle button */
+.phone-dropdown-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px; /* spacing between spinner/flag/prefix/arrow */
+  cursor: pointer;
+  padding: 8px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+.phone-dropdown-toggle:focus {
+  outline: 2px solid #007BFF;
+}
+.dropdown-arrow {
+  margin-left: auto; /* pushes arrow to the far right */
+}
+
+.flag {
+  border: 1px solid #00000021;
+}
+
+/* Spinner inside the button */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid #ccc;
+  border-top-color: #666;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* These are hidden by default and shown via JS */
+.selected-flag {
+  display: none;
+}
+.selected-prefix {
+  display: none;
+}
+
+/* The dropdown content (including search + list) */
+.phone-dropdown-content {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 999;
+  width: 100%;
+  border: 1px solid #ccc;
+  background: #fff;
+  display: none; /* toggled in JS */
+}
+
+/* The search input inside the dropdown */
+.phone-dropdown-search {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  outline: none;
+}
+
+/* The scrollable list of countries */
+.phone-dropdown-list {
+  max-height: 240px;
+  overflow-y: auto;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  outline: none;
+}
+
+/* Each phone-option <li> */
+.phone-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+.phone-option img {
+  width: 24px;
+  height: 18px;
+  object-fit: cover;
+}
+.phone-option:hover,
+.phone-option:focus,
+.phone-option.Current {
+  background-color: #eee;
+}
+
+/* The hidden ISO code input doesn't need styling */
+.iso-code-input {
+  display: none;
+}
