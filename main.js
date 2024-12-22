@@ -1,4 +1,12 @@
 (function () {
+
+  // -----------------------------
+  // CONFIGURATION
+  // -----------------------------
+  const DEFAULT_COUNTRY_CODE = 'ch'; // Default country code (e.g., Switzerland)
+  const DEFAULT_COUNTRY_TIMEZONE = 'UTC+01:00'; // Default country timezone
+  const TOP_COUNTRIES = ['ch', 'gb', 'it']; // List of top countries to display at the top
+  const SHOW_TOP_COUNTRIES = false; // Toggle to show or hide top countries  
   // -----------------------------
   // 1. DOM REFERENCES
   // -----------------------------
@@ -6,7 +14,9 @@
   const dropdownContent = document.querySelector('.phone-dropdown-content');
   const searchInput = document.querySelector('.phone-dropdown-search');
   const dropdownList = document.querySelector('.phone-dropdown-list');
-  const hiddenISOInput = document.querySelector('.phone-prefix-input');
+  const hiddenPrefixInput = document.querySelector('.phone-prefix-input');
+  const hiddenCountryISOCodeInput = document.querySelector('.country-iso-code-input');
+  const hiddenTimezoneInput = document.querySelector('.country-timezone-input');
 
   const spinnerEl = document.querySelector('.spinner');
   const selectedFlagEl = document.querySelector('.selected-flag');
@@ -51,9 +61,8 @@
           // Ensure the service provides timezone information
           if (data.timezone) {
             return {
-              country_code: data.country_code || 'CH',
-              country_name: data.country_name || 'Switzerland',
-              timezone: data.timezone || 'Europe/Zurich',
+              country_code: data.country_code || DEFAULT_COUNTRY_CODE,
+              timezone: data.timezone || DEFAULT_COUNTRY_TIMEZONE,
             };
           }
         } else {
@@ -67,9 +76,8 @@
     // Fallback if all services fail
     console.warn('All GeoIP services failed. Falling back to default location and timezone.');
     return {
-      country_code: 'CH',
-      country_name: 'Switzerland',
-      timezone: 'Europe/Zurich',
+      country_code: DEFAULT_COUNTRY_CODE,
+      timezone: DEFAULT_COUNTRY_TIMEZONE,
     };
   }
   
@@ -158,48 +166,84 @@
   // -----------------------------
   // 5. RENDER & EVENT HANDLERS
   // -----------------------------
+
   function renderDropdownOptions(countries) {
     dropdownList.innerHTML = '';
+  
+    let topCountries = [];
+    let remainingCountries = [];
+  
+    if (SHOW_TOP_COUNTRIES) {
+      // Filter top countries for separate rendering
+      topCountries = TOP_COUNTRIES.map((code) =>
+        countries.find((country) => country.cca2.toLowerCase() === code.toLowerCase())
+      ).filter(Boolean); // Remove undefined values if a code is not found
 
+      remainingCountries = countries.filter(
+        (country) => !TOP_COUNTRIES.includes(country.cca2.toLowerCase())
+      );
+  
+      // Render top countries separately with a separator
+      renderCountryList(topCountries);
+  
+      // Add a line separator
+      if (topCountries.length > 0 && remainingCountries.length > 0) {
+        const lineSeparator = document.createElement('li');
+        lineSeparator.classList.add('line-separator');
+        dropdownList.appendChild(lineSeparator);
+      }
+    } else {
+      // If not showing top countries, treat them as part of the remaining list
+      remainingCountries = countries;
+    }
+  
+    // Render remaining countries (including top countries if SHOW_TOP_COUNTRIES is false)
+    renderCountryList(remainingCountries);
+  
+    phoneOptionElements = Array.from(
+      dropdownList.querySelectorAll('.phone-option')
+    );
+  }  
+  
+
+  function renderCountryList(countries) {
+  
     countries.forEach((country) => {
       const isoCode = country.cca2 || '';
       const prefix = getPhonePrefix(country);
       if (!prefix) return;
-
-      const countryName = country.name?.common || 'Unknown';
+  
       const flagUrl = country.flags?.svg || country.flags?.png || '';
-
+  
       const li = document.createElement('li');
       li.classList.add('phone-option');
       li.setAttribute('role', 'option');
       li.id = `phone-option-${isoCode.toLowerCase()}`;
-      li.dataset.searchLabel = buildSearchLabel(country, prefix).toLowerCase();
+      li.dataset.searchLabel = `${prefix} ${isoCode}`.toLowerCase();
       li.dataset.countryCode = isoCode;
-
+  
       li.innerHTML = `
         <img class="flag" src="${flagUrl}" alt="${isoCode} flag" width="24" height="18" />
         <span class="option-label">${prefix} ${isoCode}</span>
       `;
-
+  
       li.addEventListener('click', async () => {
         selectedFlagEl.src = flagUrl;
-        selectedPrefixEl.textContent = prefix + ' ' +  isoCode;
-        hiddenISOInput.value = isoCode;
-
+        selectedPrefixEl.textContent = prefix + ' ' + isoCode;
+        hiddenPrefixInput.value = prefix;
+        hiddenCountryISOCodeInput.value = isoCode;
+  
         await handleCountrySelection(isoCode);
-
+  
         focusedIndex = phoneOptionElements.indexOf(li);
         toggleDropdown(false);
         dropdownToggle.focus();
       });
-
+  
       dropdownList.appendChild(li);
     });
-
-    phoneOptionElements = Array.from(
-      dropdownList.querySelectorAll('.phone-option')
-    );
   }
+  
 
   function handleSearch(e) {
     const query = e.target.value.trim().toLowerCase();
@@ -216,16 +260,21 @@
 
   function focusOption(index) {
     if (phoneOptionElements.length === 0) return;
-
-    if (focusedIndex >= 0) {
-      phoneOptionElements[focusedIndex].classList.remove('focused');
-    }
-
+  
+    // Clear previous focus
+    phoneOptionElements.forEach((el) => el.classList.remove('focused'));
+  
+    // Update the focused index
     focusedIndex = index;
-    phoneOptionElements[focusedIndex].classList.add('focused');
-    phoneOptionElements[focusedIndex].scrollIntoView({ block: 'nearest' });
+  
+    // Apply the focused class to the new element
+    const focusedElement = phoneOptionElements[focusedIndex];
+    focusedElement.classList.add('focused');
+  
+    // Scroll the focused option into view
+    focusedElement.scrollIntoView({ block: 'nearest' });
   }
-
+  
   function toggleDropdown(open) {
     if (open) {
       dropdownContent.style.display = 'block';
@@ -255,8 +304,7 @@
     }
 
     // Update the hidden timezone input
-    const hiddenTimezoneInput = document.querySelector('.timezone-input');
-    hiddenTimezoneInput.value = selectedCountry.timezones?.[0] || 'Unknown';
+    hiddenTimezoneInput.value = selectedCountry.timezones?.[0] || DEFAULT_COUNTRY_TIMEZONE;
   }
   
 
@@ -273,8 +321,7 @@
       renderDropdownOptions(allCountries);
 
       const userLoc = await fetchUserLocation();
-      const userCountryCode = userLoc?.country_code?.toLowerCase() || 'ch';
-      const userTimeZone = userLoc?.timezone || 'Europe/Zurich';
+      const userCountryCode = userLoc?.country_code?.toLowerCase() || DEFAULT_COUNTRY_CODE;
 
       // Preselect user location country
       const matchIndex = phoneOptionElements.findIndex(

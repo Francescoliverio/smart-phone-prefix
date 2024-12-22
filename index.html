@@ -33,7 +33,10 @@
         </button>
 
         <!-- Hidden Input for Prefix -->
-        <input type="hidden" class="phone-prefix-input" name="phonePrefix" value="+1" />
+        <input type="hidden" class="phone-prefix-input" name="phonePrefix" value="+41" />
+        
+        <!-- Hidden Input for Country ISO Code -->
+        <input type="hidden" class="country-iso-code-input" name="countryISOCode" value="CH" />
 
         <!-- Dropdown Content -->
         <div class="phone-dropdown-content" style="display: none;">
@@ -49,7 +52,7 @@
       <input type="tel" class="phone-number-field" name="phoneNumber" placeholder="Phone number" required />
 
       <!-- Hidden Input for Timezone -->
-      <input type="hidden" class="timezone-input" name="timezone" value="Europe/Zurich" />
+      <input type="hidden" class="country-timezone-input" name="timezone" value="UTC+01:00" />
 
       <!-- Submit Button -->
       <button type="submit" class="submit-button">Submit</button>
