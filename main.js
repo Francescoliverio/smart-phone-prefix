@@ -25,25 +25,35 @@
   // 2. FETCH FUNCTIONS
   // -----------------------------
   async function fetchCountries() {
-    const response = await fetch('https://restcountries.com/v3.1/all');
-    if (!response.ok) {
-      throw new Error('Error fetching countries');
-    }
-    return response.json();
-  }
-
-  async function fetchUserLocation() {
-    // e.g. "country_code": "CH"
     try {
-      const response = await fetch('https://get.geojs.io/v1/ip/geo.json');
-      if (response.ok) {
-        return response.json();
+      const response = await fetch('https://restcountries.com/v3.1/all', {
+        mode: 'cors', // Ensure CORS mode is enabled
+      });
+      if (!response.ok) {
+        throw new Error(`Error fetching countries: ${response.statusText}`);
       }
-    } catch (err) {
-      console.error('GeoJS error:', err);
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching countries:', error);
+      return null; // Return null or an empty array to handle gracefully
     }
-    return null;
   }
+  
+  async function fetchUserLocation() {
+    try {
+      const response = await fetch('https://get.geojs.io/v1/ip/geo.json', {
+        mode: 'cors', // Ensure CORS mode is enabled
+      });
+      if (!response.ok) {
+        throw new Error(`Error fetching location: ${response.statusText}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('GeoJS error:', error);
+      return null; // Return null to gracefully handle errors
+    }
+  }
+  
 
   function getPhonePrefix(country) {
     if (!country.idd || !country.idd.root) return '';
