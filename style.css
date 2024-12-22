@@ -35,6 +35,7 @@ body {
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fff;
+  font-size: 15px;
 }
 .phone-dropdown-toggle:focus {
   outline: 2px solid #007BFF;
@@ -91,6 +92,7 @@ body {
   border: none;
   border-bottom: 1px solid #ccc;
   outline: none;
+  font-size: 15px;
 }
 
 /* The scrollable list of countries */
@@ -110,6 +112,7 @@ body {
   gap: 8px;
   padding: 8px 12px;
   cursor: pointer;
+  font-size: 15px;
 }
 .phone-option img {
   width: 24px;
