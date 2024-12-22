@@ -26,7 +26,7 @@
   // -----------------------------
   async function fetchCountries() {
     try {
-      const response = await fetch('https://restcountries.com/v3.1/all1');
+      const response = await fetch('https://restcountries.com/v3.1/all');
       if (!response.ok) {
         throw new Error(`Remote fetch failed: ${response.status}`);
       }
@@ -35,7 +35,6 @@
       console.warn('Using local fallback:', err);
       // Use local fallback
       const localData = await fetch('./data/countries.json');
-      console.log(localData);
       return await localData.json();
     }
   }
