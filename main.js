@@ -325,8 +325,6 @@
   // -----------------------------
   // 7. START
   // -----------------------------
-  document.addEventListener('DOMContentLoaded', () => {
-    initDropdown();
-  });
+  initDropdown();
   
 })();
