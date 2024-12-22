@@ -21,9 +21,15 @@ body {
 /* Container for phone prefix dropdown */
 .phone-prefix-dropdown {
   position: relative;
-  width: 280px;
-  margin-bottom: 1rem;
+  width: 185px;
 }
+
+#phoneForm {
+  margin-top: 100px;
+  text-align: center;
+}
+
+
 
 /* The toggle button */
 .phone-dropdown-toggle {
@@ -82,6 +88,8 @@ body {
   border: 1px solid #ccc;
   background: #fff;
   display: none; /* toggled in JS */
+  max-height: 300px; /* Adjust as necessary */
+  overflow-y: auto;
 }
 
 /* The search input inside the dropdown */
@@ -125,7 +133,101 @@ body {
   background-color: #eee;
 }
 
+.phone-option.focused {
+  background-color: #e6f7ff;
+  color: #000;
+}
+
 /* The hidden ISO code input doesn't need styling */
 .iso-code-input {
   display: none;
+}
+
+/* Flexbox for Phone Number Input */
+.phone-number-input {
+  flex-direction: row;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px; /* Space between prefix and number fields */
+}
+
+/* Media Query for Mobile (Max Width: 768px) */
+@media (max-width: 768px) {
+  .phone-number-input {
+    flex-direction: column; /* Stack elements vertically */
+    gap: 10px; /* Reduce gap for mobile */
+  }
+}
+
+.phone-prefix-dropdown {
+  position: relative;
+}
+
+.phone-dropdown-toggle {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Space between flag, prefix, and arrow */
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.phone-number-field {
+  flex: 1; /* Take remaining space */
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 15px;
+}
+
+.submit-button {
+  padding: 5px 10px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
+/* Styled JSON Block */
+#result {
+  margin-top: 20px;
+  font-family: 'Courier New', Courier, monospace;
+  background-color: #2d2d2d; /* Dark mode */
+  color: #f8f8f2; /* Light text */
+  padding: 10px;
+  border-radius: 4px;
+  white-space: pre-wrap; /* Preserve formatting */
+  overflow-x: auto; /* Horizontal scroll for long JSON */
+  width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+
+/* Key styling */
+#result .json-key {
+  color: #66d9ef; /* Blue for keys */
+}
+
+/* String value styling */
+#result .json-string {
+  color: #a6e22e; /* Green for strings */
+}
+
+/* Number value styling */
+#result .json-number {
+  color: #a6e22e; /* Yellow for numbers */
+}
+
+/* Timezone value styling */
+#result .json-timezone {
+  color: #a6e22e; /* Orange for timezones */
 }

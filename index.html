@@ -1,88 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta content="width=device-width, initial-scale=1" name="viewport">
-  <title>Spinner in Button + Search in Dropdown</title>
+  <title>Smart Phone Number Prefix Search & Timezone in HTML, JS, CSS</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <h1>Smart Phone Number Prefix Search in HTML, JS, CSS</h1>
+  <h1>Smart Phone Number Prefix Search & Timezone in HTML, JS, CSS</h1>
 
-  <!-- Phone Prefix Dropdown -->
-  <div class="phone-prefix-dropdown">
-    
-    <!-- The Toggle Button -->
-    <button
-      class="phone-dropdown-toggle"
-      type="button"
-      aria-haspopup="listbox"
-      aria-expanded="false"
-      aria-labelledby="phonePrefixLabel"
-    >
-      <!-- Spinner (shown on load; replaced by flag/prefix when ready) -->
-      <div class="spinner"></div>
+  <form id="phoneForm" action="#" method="POST">
+    <div class="phone-number-input">
+      <!-- Phone Prefix Dropdown -->
+      <div class="phone-prefix-dropdown">
+        <!-- Dropdown Toggle -->
+        <button class="phone-dropdown-toggle" type="button" aria-haspopup="listbox" aria-expanded="false"
+          aria-labelledby="phonePrefixLabel">
 
-      <!-- Selected Flag (hidden initially) -->
-      <img
-        class="selected-flag flag"
-        src=""
-        alt="Selected country flag"
-        width="24"
-        height="18"
-        style="display: none;"
-      />
+          <div class="spinner"></div>
+          <!-- Selected Flag -->
+          <img class="selected-flag flag" src="" alt="Selected country flag" width="24" height="18"
+            style="display: none;" />
 
-      <!-- Current Prefix (hidden initially) -->
-      <span
-        class="selected-prefix"
-        style="display: none;"
-      >
-        +1
-      </span>
+          <!-- Current Prefix -->
+          <span class="selected-prefix" style="display: none;">+1</span>
 
-      <!-- Dropdown Arrow -->
-      <span class="dropdown-arrow">▼</span>
-    </button>
-    
+          <!-- Dropdown Arrow -->
+          <span class="dropdown-arrow">▼</span>
+        </button>
 
-    <!-- SR-only label for accessibility -->
-    <span id="phonePrefixLabel" class="sr-only">Select your phone prefix</span>
+        <!-- Hidden Input for Prefix -->
+        <input type="hidden" class="phone-prefix-input" name="phonePrefix" value="+1" />
 
-    <!-- The Dropdown Content -->
-    <div class="phone-dropdown-content" style="display: none;">
-      
-      <!-- Search Input (always inside dropdown, visible when dropdown opens) -->
-      <input
-        type="text"
-        class="phone-dropdown-search"
-        placeholder="Search country or prefix"
-        aria-label="Search country name or prefix"
-      />
+        <!-- Dropdown Content -->
+        <div class="phone-dropdown-content" style="display: none;">
+          <!-- Search Input -->
+          <input type="text" class="phone-dropdown-search" placeholder="Search country or prefix"
+            aria-label="Search country name or prefix" />
+          <!-- List of Countries -->
+          <ul class="phone-dropdown-list" role="listbox" tabindex="-1" aria-activedescendant=""></ul>
+        </div>
+      </div>
 
-      <!-- List of countries -->
-      <ul
-        class="phone-dropdown-list"
-        role="listbox"
-        tabindex="-1"
-        aria-activedescendant=""
-      ></ul>
+      <!-- Phone Number Input -->
+      <input type="tel" class="phone-number-field" name="phoneNumber" placeholder="Phone number" required />
+
+      <!-- Hidden Input for Timezone -->
+      <input type="hidden" class="timezone-input" name="timezone" value="Europe/Zurich" />
+
+      <!-- Submit Button -->
+      <button type="submit" class="submit-button">Submit</button>
     </div>
 
-    <!-- Hidden field to store ISO code -->
-    <input
-      type="hidden"
-      class="iso-code-input"
-      name="isoCode"
-      value=""
-    />
-  </div>
+
+    <!-- Display Submitted Data -->
+    <pre id="result">Submit the form to see the JSON data</pre>
+
+  </form>
+
 
   <!-- Polyfill for fetch (and possibly Promise if needed) -->
   <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/whatwg-fetch@3.6.2/dist/fetch.umd.min.js"></script>
   <!-- Main JS file -->
   <script src="main.js"></script>
+
+  <!-- Main JS file -->
+  <script>
+    const phoneForm = document.getElementById('phoneForm');
+    const resultDiv = document.getElementById('result');
+
+    phoneForm.addEventListener('submit', (event) => {
+      event.preventDefault(); // Prevent actual form submission
+
+      // Collect form data
+      const formData = new FormData(phoneForm);
+      const data = {};
+      formData.forEach((value, key) => {
+        data[key] = value;
+      });
+
+      // Format and colorize JSON
+      resultDiv.innerHTML = formatJSON(data);
+
+      // Show the JSON block
+      resultDiv.style.display = 'block';
+    });
+    function formatJSON(obj) {
+      const json = JSON.stringify(obj, null, 2); // Pretty format JSON
+
+      // Use regex to wrap keys and values in spans with styling classes
+      return json
+        .replace(/"([^"]+)":/g, '<span class="json-key">"$1"</span>:') // Keys
+        .replace(/: "([^"]+)"/g, ': <span class="json-string">"$1"</span>') // String values
+        .replace(/: (\d+)/g, ': <span class="json-number">$1</span>') // Numbers
+        .replace(/(UTC[+-]\d{2}:\d{2})/g, '<span class="json-timezone">$1</span>'); // Timezones
+    }
+  </script>
+
 </body>
+
 </html>
