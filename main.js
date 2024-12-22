@@ -39,6 +39,7 @@
     }
   }
 
+
   async function fetchUserLocation() {
     const services = [
       'https://get.geojs.io/v1/ip/geo.json',
@@ -59,9 +60,12 @@
       }
     }
   
-    // If all services fail
-    console.error('All GeoIP services failed.');
-    return null;
+    // Fallback: Default to Switzerland
+    console.warn('All GeoIP services failed. Defaulting to Switzerland.');
+    return {
+      country_code: 'CH', // Switzerland's country code
+      country_name: 'Switzerland',
+    };
   }
 
   function getPhonePrefix(country) {
@@ -81,10 +85,6 @@
     let nativeNamesText = '';
     if (country.name?.nativeName) {
       const nativeNameValues = Object.values(country.name.nativeName); 
-      // e.g. for Switzerland, we get multiple languages
-      //   { official: "Confédération suisse", common: "Suisse" }
-      //   { official: "Schweizerische Eidgenossenschaft", common: "Schweiz" }
-      //   etc...
       nativeNamesText = nativeNameValues
         .map(n => `${n.official ?? ''} ${n.common ?? ''}`)
         .join(' ');
@@ -230,27 +230,20 @@
   // -----------------------------
   async function initDropdown() {
     try {
-      // Spinner in button is visible; flag/prefix hidden
-      // 1) Fetch countries
-      allCountries = await fetchCountries();
-      // 2) Sort
+      // 1. Fetch countries with fallback
+      const allCountries = await fetchCountries();
       allCountries.sort((a, b) => {
         const nameA = a.name?.common || '';
         const nameB = b.name?.common || '';
         return nameA.localeCompare(nameB);
       });
-      filteredCountries = allCountries.slice();
-      renderDropdownOptions(filteredCountries);
-
-      // 3) IP-based country code
-      const userLoc = await fetchUserLocation(); 
-      let userCountryCode = null;
-      if (userLoc && userLoc.country_code) {
-        userCountryCode = userLoc.country_code;
-        // console.log('[DEBUG] userCountryCode =', userCountryCode);
-      }
-
-      // Try to select user’s country
+      renderDropdownOptions(allCountries);
+  
+      // 2. Fetch user location with fallback
+      const userLoc = await fetchUserLocation();
+      let userCountryCode = userLoc.country_code; // Will default to CH if fetch fails
+  
+      // 3. Use user's country code if available
       if (userCountryCode) {
         const lowerCode = userCountryCode.toLowerCase();
         const matchIndex = phoneOptionElements.findIndex(
@@ -260,52 +253,16 @@
           phoneOptionElements[matchIndex].click();
         }
       }
-
-      // Data is ready => hide spinner, show real flag & prefix
+  
+      // 4. Hide spinner and show UI
       spinnerEl.style.display = 'none';
       selectedFlagEl.style.display = 'inline-block';
       selectedPrefixEl.style.display = 'inline-block';
-
     } catch (err) {
       console.error('initDropdown error:', err);
       spinnerEl.textContent = 'Failed to load data.';
     }
-  }
-
-
-  async function initDropdown() {
-    try {
-      // 1) Fetch countries
-      allCountries = await fetchCountries();
-      allCountries.sort((a, b) => {
-        const nameA = a.name?.common || '';
-        const nameB = b.name?.common || '';
-        return nameA.localeCompare(nameB);
-      });
-      filteredCountries = allCountries.slice();
-      renderDropdownOptions(filteredCountries);
-      // 2) Attempt geo-IP
-      try {
-        const userLoc = await fetchUserLocation(); 
-        // if userLoc fails, we don't kill the entire flow
-        if (userLoc?.country_code) {
-          // do the selection
-        }
-      } catch (locErr) {
-        console.warn('fetchUserLocation failed', locErr);
-      }
-  
-      // 3) Hide spinner, show UI
-      spinnerEl.style.display = 'none';
-      selectedFlagEl.style.display = 'inline-block';
-      selectedPrefixEl.style.display = 'inline-block';
-  
-    } catch (err) {
-      console.error('initDropdown error:', err);
-      spinnerEl.textContent = 'Failed to load data.';
-    }
-  }
-  
+  }  
 
   // -----------------------------
   // 6. EVENT LISTENERS
