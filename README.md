@@ -185,7 +185,3 @@ This project is open source and available under the [MIT License](LICENSE).
 - Local fallback provided via `./data/countries.json`.
 
 Feel free to reach out if you have any questions or suggestions!
-
----
-
-This updated README now includes the configuration details, making it easier for users to understand how to customize the dropdown behavior and appearance. Let me know if further refinements are needed! 😊
