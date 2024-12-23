@@ -1,7 +1,3 @@
-### Updated README with Configuration Options
-
----
-
 # Smart Phone Number Prefix Search & Timezone in HTML, JS, CSS
 
 This project demonstrates a smart customizable phone prefix dropdown with advanced features like dynamic country fetching, user geolocation, timezone integration, search functionality, and ARIA-compliant keyboard navigation. The dropdown includes a spinner while loading and a search bar to filter by country name, code, or prefix.
