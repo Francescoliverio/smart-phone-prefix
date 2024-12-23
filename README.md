@@ -1,3 +1,7 @@
+### Updated README with Configuration Options
+
+---
+
 # Smart Phone Number Prefix Search & Timezone in HTML, JS, CSS
 
 This project demonstrates a smart customizable phone prefix dropdown with advanced features like dynamic country fetching, user geolocation, timezone integration, search functionality, and ARIA-compliant keyboard navigation. The dropdown includes a spinner while loading and a search bar to filter by country name, code, or prefix.
@@ -7,7 +11,6 @@ This project demonstrates a smart customizable phone prefix dropdown with advanc
 ## Demo
 
 Check out the live demo here: <a href="https://smart-phone-prefix.francescoliverio.com/" target="_blank">Smart Phone Number Prefix Search</a>
-
 
 ---
 
@@ -34,6 +37,16 @@ Check out the live demo here: <a href="https://smart-phone-prefix.francescoliver
   - Automatically fetches the user's timezone based on their IP address or selected country.
   - Preselects the country and timezone based on geolocation when the page loads.
   - Displays the timezone in a hidden field, which is submitted with the form data.
+
+- **Configurable Options**:
+
+  - Customize the behavior and appearance of the dropdown with the following configuration options:
+    ```javascript
+    const DEFAULT_COUNTRY_CODE = 'ch'; // Default country code (e.g., "ch" fro Swiss or "it" for Italy)
+    const DEFAULT_COUNTRY_TIMEZONE = 'UTC+01:00'; // Default country timezone
+    const TOP_COUNTRIES = ['ch', 'gb', 'it']; // List of top countries to display at the top
+    const SHOW_TOP_COUNTRIES = true; // Toggle to show or hide top countries
+    ```
 
 - **Accessible Design**:
 
@@ -109,6 +122,17 @@ root/
 
 ## Customization
 
+### Configuration Options
+
+These configuration options allow you to customize the dropdown's behavior and appearance:
+
+```javascript
+const DEFAULT_COUNTRY_CODE = 'ch'; // Default country code (e.g., "ch" fro Swiss or "it" for Italy)
+const DEFAULT_COUNTRY_TIMEZONE = 'UTC+01:00'; // Default country timezone
+const TOP_COUNTRIES = ['ch', 'gb', 'it']; // List of top countries to display at the top
+const SHOW_TOP_COUNTRIES = true; // Toggle to show or hide top countries
+```
+
 ### Styling
 
 - Modify `style.css` to change the appearance.
@@ -162,3 +186,6 @@ This project is open source and available under the [MIT License](LICENSE).
 
 Feel free to reach out if you have any questions or suggestions!
 
+---
+
+This updated README now includes the configuration details, making it easier for users to understand how to customize the dropdown behavior and appearance. Let me know if further refinements are needed! 😊

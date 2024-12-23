@@ -4,8 +4,54 @@
 <head>
   <meta charset="UTF-8" />
   <meta content="width=device-width, initial-scale=1" name="viewport">
+  <link id="favicon" rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><text y='50%' x='50%' dominant-baseline='middle' text-anchor='middle' font-size='19'>🌎</text></svg>">
+  <meta name="description" content="Smart Phone Number Prefix Search & Timezone in HTML, JS, CSS" />
+  <meta name="keywords" content="HTML, CSS, JavaScript, Phone Prefix, Timezone, JSON" />
+  <meta name="author" content="Francesco Oliverio" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@francescoliverio" />
+  <meta name="twitter:creator" content="@francescoliverio" />
+  <meta property="og:url" content="https://francescoliverio.github.io/smart-phone-prefix/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Smart Phone Number Prefix Search & Timezone in HTML, JS, CSS" />
+  <meta property="og:description" content="Smart Phone Number Prefix Search & Timezone in HTML, JS, CSS" />
+  <meta property="og:image"
+    content="https://opengraph.githubassets.com/7d7601d6d166ab243badca47dec3bccc8269509fe25360127004ee0e3dc0f1f4/Francescoliverio/smart-phone-prefix" />
+  <meta property="og:image:alt" content="Smart Phone Number Prefix Search & Timezone in HTML, JS, CSS" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="Francesco Oliverio" />
   <title>Smart Phone Number Prefix Search & Timezone in HTML, JS, CSS</title>
   <link rel="stylesheet" href="style.css">
+
+  <script>
+    // Emoji sequence for the animated favicon
+    const emojis = ['🌎', '🌍', '🌏'];
+    let currentIndex = 0;
+
+    function updateFavicon() {
+      const favicon = document.getElementById('favicon');
+      const emoji = emojis[currentIndex];
+      const svgFavicon = `
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
+      <text y='50%' x='50%' dominant-baseline='middle' text-anchor='middle' font-size='19'>${emoji}</text>
+    </svg>
+  `;
+      favicon.setAttribute('href', `data:image/svg+xml,${encodeURIComponent(svgFavicon)}`);
+      currentIndex = (currentIndex + 1) % emojis.length; // Loop through the emojis
+    }
+
+
+
+    // Update the favicon every 1 second (1000 ms)
+    setInterval(updateFavicon, 500);
+
+  </script>
+
 </head>
 
 <body>
@@ -34,7 +80,7 @@
 
         <!-- Hidden Input for Prefix -->
         <input type="hidden" class="phone-prefix-input" name="phonePrefix" value="+41" />
-        
+
         <!-- Hidden Input for Country ISO Code -->
         <input type="hidden" class="country-iso-code-input" name="countryISOCode" value="CH" />
 
@@ -61,6 +107,12 @@
 
     <!-- Display Submitted Data -->
     <pre id="result">Submit the form to see the JSON data</pre>
+
+    <!-- Github Repo -->
+    <a href="https://github.com/Francescoliverio/smart-phone-prefix.git" target="_blank" class="github-link">
+      <img src="https://img.shields.io/badge/GitHub-View%20on%20GitHub-blue?logo=github" alt="GitHub Badge" />
+    </a>
+
 
   </form>
 

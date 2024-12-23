@@ -3,10 +3,10 @@
   // -----------------------------
   // CONFIGURATION
   // -----------------------------
-  const DEFAULT_COUNTRY_CODE = 'ch'; // Default country code (e.g., Switzerland)
-  const DEFAULT_COUNTRY_TIMEZONE = 'UTC+01:00'; // Default country timezone
-  const TOP_COUNTRIES = ['ch', 'gb', 'it']; // List of top countries to display at the top
-  const SHOW_TOP_COUNTRIES = false; // Toggle to show or hide top countries  
+  const DEFAULT_COUNTRY_CODE = 'ch';
+  const DEFAULT_COUNTRY_TIMEZONE = 'UTC+01:00';
+  const TOP_COUNTRIES = ['ch', 'gb', 'it'];
+  const SHOW_TOP_COUNTRIES = true;  
   // -----------------------------
   // 1. DOM REFERENCES
   // -----------------------------
